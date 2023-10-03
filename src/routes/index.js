@@ -1,8 +1,8 @@
 import express from 'express'
-import reveneus from './reveneusRoutes.js'
+import transactions from './transactionRoutes.js'
 
 const routes = (app) => {
-  app.use(express.json(), reveneus)
+  app.use(express.json(), transactions)
 }
 
 export default routes
