@@ -31,6 +31,61 @@ class TransactionController {
     }
   }
 
+  static async getFilteredTransactions(req, res) {
+    const {
+      category,
+      date,
+      type,
+      value,
+      paymentMethod,
+      description,
+      initialValue,
+      finalValue,
+      initialDate,
+      finalDate
+    } = req.query
+
+    try {
+      const transactions = await transactionService.getTransactionsFiltered({
+        category,
+        type,
+        paymentMethod,
+        description,
+      }, {
+        initialDate,
+        finalDate
+      },
+      {
+        initialValue,
+        finalValue
+      })
+
+      return res.status(200).send(transactions)
+    } catch (error) {
+      return res.status(400).send({ err: error })
+    }
+  }
+
+  static async getIncomes(req, res) {
+    try {
+      const incomes = await transactionService.getIncomes()
+
+      return res.status(200).send(incomes)
+    } catch (error) {
+      return res.status(400).send({ err: error })
+    }
+  }
+
+  static async getExpenses(req, res) {
+    try {
+      const expenses = await transactionService.getExpenses()
+
+      return res.status(200).send(expenses)
+    } catch (error) {
+      return res.status(400).send({ err: error })
+    }
+  }
+
   static async indexTransaction(req, res) {
     const { id } = req.params
 
