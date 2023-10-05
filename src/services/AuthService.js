@@ -7,7 +7,7 @@ class AuthService {
   async login(dto) {
     const { username, password } = dto
 
-    const user = await User.findOne({ username: 'edenkiefer' })
+    const user = await User.findOne({ username })
 
     if (!user)
       throw new Error('Usuário não encontrado')
