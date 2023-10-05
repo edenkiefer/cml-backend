@@ -9,27 +9,27 @@ const transactionSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      required: true,
+      required: [true, 'A Categoria da Transação é obrigatório.'],
     },
     date: {
       type: Date,
-      required: true,
+      required: [true, 'A Data da Transação é obrigatório.'],
       default: new Date(),
     },
     type: {
       type: String,
-      required: true,
+      required: [true, 'O Tipo(Entrada ou Saída) da Transação é obrigatório.'],
       enum: {
         values: ['E', 'S'],
       },
     },
     value: {
       type: Number,
-      required: true,
+      required: [true, 'O Valor da Transação é obrigatório.'],
     },
     paymentMethod: {
       type: String,
-      required: true,
+      required: [true, 'O Método de Pagamento é obrigatório.'],
       enum: {
         values: ['Pix', 'TED', 'Dinheiro'],
       },

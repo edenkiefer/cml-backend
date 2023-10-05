@@ -9,11 +9,11 @@ const productSchema = mongoose.Schema(
     },
     name: {
       type: String,
-      required: true
+      required: [true, 'O Nome do produto é obrigatório.']
     },
     price: {
       type: Number,
-      required: true
+      required: [true, 'O Preço do produto é obrigatório.']
     },
     cashPrice: {
       type: Number
