@@ -2,7 +2,7 @@ import ProductService from '../services/ProductService.js'
 const productService = new ProductService()
 
 class ProductController {
-  static async createProduct(req, res) {
+  static async createProduct(req, res, next) {
     const { name, price, cashPrice, stockQuantity } = req.body
 
     try {
@@ -15,21 +15,21 @@ class ProductController {
 
       return res.status(201).send(product)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async getProducts(req, res) {
+  static async getProducts(req, res, next) {
     try {
       const products = await productService.get()
 
       return res.status(200).send(products)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async indexProduct(req, res) {
+  static async indexProduct(req, res, next) {
     const { id } = req.params
 
     try {
@@ -37,11 +37,11 @@ class ProductController {
 
       return res.status(200).send(product)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async updateProduct(req, res) {
+  static async updateProduct(req, res, next) {
     const { id } = req.params
     const { name, price, cashPrice, stockQuantity } = req.body
     try {
@@ -54,18 +54,18 @@ class ProductController {
 
       return res.status(200).send(product)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async deleteProduct(req, res) {
+  static async deleteProduct(req, res, next) {
     const { id } = req.params
     try {
       await productService.delete(id)
 
       return res.status(200).send({ msg: 'Produto excluido com sucesso' })
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 }

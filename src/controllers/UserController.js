@@ -2,7 +2,7 @@ import UserService from '../services/UserService.js'
 const userService = new UserService()
 
 class UserController {
-  static async createUser(req, res) {
+  static async createUser(req, res, next) {
     const { username, password } = req.body
 
     try {
@@ -13,21 +13,21 @@ class UserController {
 
       return res.status(201).send(user)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async getUsers(req, res) {
+  static async getUsers(req, res, next) {
     try {
       const users = await userService.get()
 
       return res.status(200).send(users)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async indexUser(req, res) {
+  static async indexUser(req, res, next) {
     const { id } = req.params
 
     try {
@@ -35,11 +35,11 @@ class UserController {
 
       return res.status(200).send(user)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async updateUser(req, res) {
+  static async updateUser(req, res, next) {
     const { id } = req.params
     const { username, password } = req.body
     try {
@@ -50,18 +50,18 @@ class UserController {
 
       return res.status(200).send(user)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async deleteUser(req, res) {
+  static async deleteUser(req, res, next) {
     const { id } = req.params
     try {
       await userService.delete(id)
 
       return res.status(200).send({ msg: 'Usuário excluido com sucesso' })
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 }

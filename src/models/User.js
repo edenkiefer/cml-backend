@@ -9,12 +9,12 @@ const userSchema = mongoose.Schema(
     },
     username: {
       type: String,
-      required: true,
+      required: [true, 'O Nome do Usuário é obrigatório.'],
       unique: true
     },
     password: {
       type: String,
-      required: true
+      required: [true, 'A Senha do Usuário é obrigatório.']
     },
     admin: {
       type: Boolean,

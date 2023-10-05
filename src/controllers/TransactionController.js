@@ -2,7 +2,7 @@ import TransactionService from '../services/TransactionService.js'
 const transactionService = new TransactionService()
 
 class TransactionController {
-  static async createTransaction(req, res) {
+  static async createTransaction(req, res, next) {
     const { category, date, type, value, paymentMethod, description } = req.body
 
     try {
@@ -17,26 +17,24 @@ class TransactionController {
 
       return res.status(201).send(transaction)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async getTransactions(req, res) {
+  static async getTransactions(req, res, next) {
     try {
       const transactions = await transactionService.get()
 
       return res.status(200).send(transactions)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async getFilteredTransactions(req, res) {
+  static async getFilteredTransactions(req, res, next) {
     const {
       category,
-      date,
       type,
-      value,
       paymentMethod,
       description,
       initialValue,
@@ -62,31 +60,31 @@ class TransactionController {
 
       return res.status(200).send(transactions)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async getIncomes(req, res) {
+  static async getIncomes(req, res, next) {
     try {
       const incomes = await transactionService.getIncomes()
 
       return res.status(200).send(incomes)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async getExpenses(req, res) {
+  static async getExpenses(req, res, next) {
     try {
       const expenses = await transactionService.getExpenses()
 
       return res.status(200).send(expenses)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async indexTransaction(req, res) {
+  static async indexTransaction(req, res, next) {
     const { id } = req.params
 
     try {
@@ -94,11 +92,11 @@ class TransactionController {
 
       return res.status(200).send(transaction)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async updateTransaction(req, res) {
+  static async updateTransaction(req, res, next) {
     const { id } = req.params
     const { category, date, type, value, paymentMethod, description } = req.body
 
@@ -114,18 +112,18 @@ class TransactionController {
 
       return res.status(200).send(transaction)
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 
-  static async deleteTransaction(req, res) {
+  static async deleteTransaction(req, res, next) {
     const { id } = req.params
     try {
       await transactionService.delete(id)
 
       return res.status(200).send({ msg: 'Transação excluida com sucesso' })
     } catch (error) {
-      return res.status(400).send({ err: error })
+      next(error)
     }
   }
 }
